@@ -21,6 +21,7 @@ const UserSchema = new Schema(
     password: {
       type: String,
       required: true,
+      select: false,
     },
     role: {
       type: String,
@@ -58,7 +59,7 @@ const UserSchema = new Schema(
       },
     },
     is_active: {
-      type: Boolean, //eliminar con date, para que sirve, preguntar al profe
+      type: Boolean,
       default: true,
     },
   },
@@ -68,4 +69,5 @@ const UserSchema = new Schema(
   }
 );
 
-export const UserModel = model("User", UserSchema);
+const UserModel = model("User", UserSchema);
+export default UserModel;
