@@ -13,7 +13,7 @@ export const createUser = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    const users = await UserModel.find();
+    const users = await UserModel.find({ is_active: true }).lean();
     return res.status(200).json(users);
   } catch (error) {
     console.error(error);
@@ -23,7 +23,9 @@ export const getUser = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.params.id);
+    const user = await UserModel.findById(req.params.id, {
+      is_active: true,
+    }).lean();
     return res.status(200).json(user);
   } catch (error) {
     console.error(error);
@@ -47,7 +49,9 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    await UserModel.findByIdAndDelete(req.params.id);
+    await UserModel.findByIdAndUpdate(req.params.id, {
+      is_active: false,
+    });
     return res.status(204).json({ msg: "Usuario eliminado" });
   } catch (error) {
     console.error(error);
