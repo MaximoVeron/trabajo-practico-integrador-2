@@ -1,6 +1,6 @@
-import TagModel from "../../../models/tag.model,js";
+import TagModel from "../../../models/tag.model.js";
 
-export const validateTagId = async (id) => {
+export const validateTagExists = async (id) => {
   const tag = await TagModel.findById(id);
   if (!tag) {
     throw new Error("Etiqueta no encontrada");
