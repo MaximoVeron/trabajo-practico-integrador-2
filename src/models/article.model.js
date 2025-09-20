@@ -8,6 +8,7 @@ const ArticleSchema = new Schema(
       min: [3, "El título debe tener al menos 3 caracteres"],
       max: [200, "El título no puede exceder los 200 caracteres"],
       trim: true,
+      lowercase: true,
     },
     content: {
       type: String,

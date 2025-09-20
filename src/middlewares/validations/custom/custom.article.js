@@ -9,7 +9,7 @@ export const validateArticleExists = async (id) => {
 
 export const validateArticleTitleUnique = async (title) => {
   const articleTitle = await ArticleModel.findOne({
-    title: title.toLowerCase(),
+    title: title,
   });
   if (articleTitle) {
     throw new Error("El título del artículo debe ser único");
@@ -18,7 +18,7 @@ export const validateArticleTitleUnique = async (title) => {
 
 export const validateUpdateArticleTitleUnique = async (title, { req }) => {
   const articleTitle = await ArticleModel.findOne({
-    title: title.toLowerCase(),
+    title: title,
   });
   if (articleTitle && articleTitle._id.toString() !== req.params.id) {
     throw new Error("El título del artículo debe ser único");
