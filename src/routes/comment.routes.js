@@ -6,13 +6,39 @@ import {
   updateComment,
   deleteComment,
 } from "../controllers/comment.controller.js";
+import { applyValidations } from "../middlewares/catch.validations.js";
+import {
+  validateCreateComment,
+  validateUpdateComment,
+  validateCommentId,
+} from "../middlewares/validations/comment.validation.js";
 
 const commentRouter = Router();
 
-commentRouter.post("/comments", createComment);
+commentRouter.post(
+  "/comments",
+  validateCreateComment,
+  applyValidations,
+  createComment
+);
 commentRouter.get("/comments", getComments);
-commentRouter.get("/comments/:id", getCommentById);
-commentRouter.put("/comments/:id", updateComment);
-commentRouter.delete("/comments/:id", deleteComment);
+commentRouter.get(
+  "/comments/:id",
+  validateCommentId,
+  applyValidations,
+  getCommentById
+);
+commentRouter.put(
+  "/comments/:id",
+  validateUpdateComment,
+  applyValidations,
+  updateComment
+);
+commentRouter.delete(
+  "/comments/:id",
+  validateCommentId,
+  applyValidations,
+  deleteComment
+);
 
 export default commentRouter;

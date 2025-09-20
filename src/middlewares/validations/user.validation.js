@@ -1,5 +1,8 @@
 import { body, param } from "express-validator";
-import { validateUserId, validateEmailUnique } from "./custom/custom.user.js";
+import {
+  validateUserExists,
+  validateEmailUnique,
+} from "./custom/custom.user.js";
 
 export const validateUserCreation = [
   body("username")
@@ -131,5 +134,5 @@ export const validateUserId = [
   param("id")
     .isMongoId()
     .withMessage("El ID debe ser un ObjectId válido de MongoDB")
-    .custom(validateUserId),
+    .custom(validateUserExists),
 ];

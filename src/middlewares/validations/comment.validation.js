@@ -1,5 +1,5 @@
 import { body, param } from "express-validator";
-import { validateUserId } from "./custom/custom.user.js";
+import { validateUserExists } from "./custom/custom.user.js";
 import { validateCommentExists } from "./custom/custom.comment.js";
 import { validateArticleExists } from "./custom/custom.article.js";
 
@@ -14,7 +14,7 @@ export const validateCreateComment = [
     .withMessage("El autor es obligatorio")
     .isMongoId()
     .withMessage("Debe ingresar un id válido")
-    .custom(validateUserId),
+    .custom(validateUserExists),
   body("article")
     .notEmpty()
     .withMessage("El comentario debe pertenecer a una publicación")
@@ -32,7 +32,7 @@ export const validateUpdateComment = [
     .optional()
     .isMongoId()
     .withMessage("Debe ingresar un id válido")
-    .custom(validateUserId),
+    .custom(validateUserExists),
   body("article")
     .optional()
     .isMongoId()

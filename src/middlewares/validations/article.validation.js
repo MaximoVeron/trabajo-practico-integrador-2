@@ -1,5 +1,5 @@
 import { body, param } from "express-validator";
-import { validateUserId } from "./custom/custom.user.js";
+import { validateUserExists } from "./custom/custom.user.js";
 import {
   validateArticleExists,
   validateArticleTitleUnique,
@@ -43,7 +43,7 @@ export const validateCreateArticle = [
     .withMessage("El autor es obligatorio")
     .isMongoId()
     .withMessage("El autor debe ser un ObjectId válido")
-    .custom(validateUserId),
+    .custom(validateUserExists),
   body("tags")
     .optional()
     .isArray()
@@ -94,7 +94,7 @@ export const validateUpdateArticle = [
     .optional()
     .isMongoId()
     .withMessage("El autor debe ser un ObjectId válido")
-    .custom(validateUserId),
+    .custom(validateUserExists),
   body("tags")
     .optional()
     .isArray()
