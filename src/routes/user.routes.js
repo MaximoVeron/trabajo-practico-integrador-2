@@ -5,6 +5,7 @@ import {
   getUserById,
   updateUser,
   deleteUser,
+  getUserWithArticles,
 } from "../controllers/user.controller.js";
 import { applyValidations } from "../middlewares/catch.validations.js";
 import {
@@ -18,6 +19,12 @@ const userRouter = Router();
 userRouter.post("/users", validateUserCreation, applyValidations, createUser);
 userRouter.get("/users", getUser);
 userRouter.get("/users/:id", validateUserId, applyValidations, getUserById);
+userRouter.get(
+  "/users/:id/articles",
+  validateUserId,
+  applyValidations,
+  getUserWithArticles
+);
 userRouter.put(
   "/users/:id",
   validateUserId,

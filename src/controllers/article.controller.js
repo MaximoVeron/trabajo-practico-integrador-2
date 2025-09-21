@@ -1,4 +1,5 @@
 import ArticleModel from "../models/article.model.js";
+import CommentModel from "../models/comment.model.js";
 
 export const createArticle = async (req, res) => {
   try {
@@ -13,7 +14,12 @@ export const createArticle = async (req, res) => {
 
 export const getArticles = async (req, res) => {
   try {
-    const articles = await ArticleModel.find();
+    const articles = await ArticleModel.find()
+      .populate({
+        path: "author",
+        select: "username email",
+      })
+      .populate("tags", "name");
     return res.status(200).json(articles);
   } catch (error) {
     console.error(error);
@@ -47,7 +53,11 @@ export const updateArticle = async (req, res) => {
 
 export const deleteArticle = async (req, res) => {
   try {
-    await ArticleModel.findByIdAndDelete(req.params.id);
+    const articleId = req.params.id;
+    // 1. Primero eliminar todos los comentarios del artículo
+    await CommentModel.deleteMany({ article: articleId });
+    // 2. Luego eliminar el artículo
+    await ArticleModel.findByIdAndDelete(articleId);
     return res.status(204).json({ msg: "Artículo eliminado" });
   } catch (error) {
     console.error(error);

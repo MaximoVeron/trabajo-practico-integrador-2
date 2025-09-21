@@ -58,3 +58,25 @@ export const deleteUser = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+export const getUserWithArticles = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id).populate({
+      path: "articles",
+      select: "title content excerpt status",
+      populate: {
+        path: "tags",
+        select: "name",
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};

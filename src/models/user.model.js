@@ -66,8 +66,17 @@ const UserSchema = new Schema(
   {
     versionKey: false,
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+// Virtual para obtener los artículos del usuario
+UserSchema.virtual("articles", {
+  ref: "Article",
+  localField: "_id",
+  foreignField: "author",
+});
 
 const UserModel = model("User", UserSchema);
 export default UserModel;
