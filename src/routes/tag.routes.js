@@ -12,13 +12,42 @@ import {
   validateTagUpdate,
   validateTagId,
 } from "../middlewares/validations/tag.validation.js";
+import { authMiddleware } from "../middlewares/auth.middlewares.js";
+import { isAdmin } from "../middlewares/admin.middleware.js";
 
 const tagRouter = Router();
 
-tagRouter.post("/tags", validateTagCreation, applyValidations, createTag);
-tagRouter.get("/tags", getTags);
-tagRouter.get("/tags/:id", validateTagId, applyValidations, getTagById);
-tagRouter.put("/tags/:id", validateTagUpdate, applyValidations, updateTag);
-tagRouter.delete("/tags/:id", validateTagId, applyValidations, deleteTag);
+tagRouter.post(
+  "/tags",
+  authMiddleware,
+  isAdmin,
+  validateTagCreation,
+  applyValidations,
+  createTag
+);
+tagRouter.get("/tags", authMiddleware, getTags);
+tagRouter.get(
+  "/tags/:id",
+  validateTagId,
+  authMiddleware,
+  applyValidations,
+  getTagById
+);
+tagRouter.put(
+  "/tags/:id",
+  validateTagUpdate,
+  authMiddleware,
+  isAdmin,
+  applyValidations,
+  updateTag
+);
+tagRouter.delete(
+  "/tags/:id",
+  validateTagId,
+  authMiddleware,
+  isAdmin,
+  applyValidations,
+  deleteTag
+);
 
 export default tagRouter;

@@ -39,8 +39,7 @@ export const validateCreateArticle = [
     .isIn(["published", "archived"])
     .withMessage("El estado debe ser 'published' o 'archived'"),
   body("author")
-    .notEmpty()
-    .withMessage("El autor es obligatorio")
+    .optional()
     .isMongoId()
     .withMessage("El autor debe ser un ObjectId válido")
     .custom(validateUserExists),

@@ -13,11 +13,19 @@ import {
   validateUserUpdate,
   validateUserId,
 } from "../middlewares/validations/user.validation.js";
+import { authMiddleware } from "../middlewares/auth.middlewares.js";
+import { isAdmin } from "../middlewares/admin.middleware.js";
 
 const userRouter = Router();
 // userRouter.use(authMiddleware); // Aplica el middleware de autenticación a todas las rutas de usuario
-userRouter.post("/users", validateUserCreation, applyValidations, createUser);
-userRouter.get("/users", getUser);
+userRouter.post(
+  "/users",
+  authMiddleware,
+  validateUserCreation,
+  applyValidations,
+  createUser
+);
+userRouter.get("/users", authMiddleware, isAdmin, getUser);
 userRouter.get("/users/:id", validateUserId, applyValidations, getUserById);
 userRouter.get(
   "/users/:id/articles",
@@ -28,6 +36,8 @@ userRouter.get(
 userRouter.put(
   "/users/:id",
   validateUserId,
+  authMiddleware,
+  isAdmin,
   validateUserUpdate,
   applyValidations,
   updateUser

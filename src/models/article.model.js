@@ -30,7 +30,6 @@ const ArticleSchema = new Schema(
     author: {
       type: Types.ObjectId,
       ref: "User",
-      required: true,
     },
     tags: [
       {

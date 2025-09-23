@@ -12,6 +12,8 @@ import {
   validateUpdateArticle,
   validateArticleId,
 } from "../middlewares/validations/article.validation.js";
+import { authMiddleware } from "../middlewares/auth.middlewares.js";
+import { isOwnerOrAdmin } from "../middlewares/ownerOrAdminMiddleware.js";
 
 const articleRouter = Router();
 
@@ -31,6 +33,8 @@ articleRouter.get(
 articleRouter.put(
   "/articles/:id",
   validateArticleId,
+  authMiddleware,
+  isOwnerOrAdmin,
   validateUpdateArticle,
   applyValidations,
   updateArticle

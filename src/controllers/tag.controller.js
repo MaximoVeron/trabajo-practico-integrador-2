@@ -1,8 +1,9 @@
 import TagModel from "../models/tag.model.js";
+import ArticleModel from "../models/article.model.js";
 
 export const createTag = async (req, res) => {
   try {
-    const newTag = new TagModel(req.body);
+    const newTag = new TagModel(req.validatedData);
     await newTag.save();
     return res.status(201).json(newTag);
   } catch (error) {
@@ -35,7 +36,7 @@ export const updateTag = async (req, res) => {
   try {
     const updateTag = await TagModel.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      req.validatedData,
       { new: true }
     );
     return res.status(200).json(updateTag);
@@ -47,7 +48,9 @@ export const updateTag = async (req, res) => {
 
 export const deleteTag = async (req, res) => {
   try {
-    await TagModel.findByIdAndDelete(req.params.id);
+    const tagId = req.params.id;
+    await ArticleModel.deleteMany({ tags: tagId });
+    await TagModel.findByIdAndDelete(tagId);
     return res.status(204).json({ msg: "Etiqueta eliminada" });
   } catch (error) {
     console.error(error);

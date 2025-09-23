@@ -2,7 +2,8 @@ import UserModel from "../models/user.model.js";
 
 export const createUser = async (req, res) => {
   try {
-    const newUser = new UserModel(req.body);
+    console.log(req.validatedData);
+    const newUser = new UserModel(req.validatedData);
     await newUser.save();
     return res.status(201).json(newUser);
   } catch (error) {
@@ -37,7 +38,7 @@ export const updateUser = async (req, res) => {
   try {
     const updateUser = await UserModel.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      req.validatedData,
       { new: true }
     );
     return res.status(200).json(updateUser);

@@ -3,7 +3,10 @@ import CommentModel from "../models/comment.model.js";
 
 export const createArticle = async (req, res) => {
   try {
-    const newArticle = new ArticleModel(req.body);
+    const newArticle = new ArticleModel({
+      ...req.validatedData,
+      author: req.user.id,
+    });
     await newArticle.save();
     return res.status(201).json(newArticle);
   } catch (error) {
@@ -41,7 +44,7 @@ export const updateArticle = async (req, res) => {
   try {
     const updateArticle = await ArticleModel.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      req.validatedData,
       { new: true }
     );
     return res.status(200).json(updateArticle);
