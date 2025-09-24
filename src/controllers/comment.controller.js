@@ -67,3 +67,22 @@ export const getCommentsByUser = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+// GET /api/comments/article/:articleId → Listar comentarios de un artículo con
+// populate de author. (usuario autenticado)
+export const getCommentsByArticle = async (req, res) => {
+  try {
+    const comments = await CommentModel.find({
+      article: req.params.articleId,
+    }).populate("author", "username");
+    return res.status(200).json({
+      message: "Comentarios del artículo",
+      articleId: req.params.articleId,
+      count: comments.length,
+      comments: comments,
+    });
+  } catch (error) {
+    console.error("Error en getCommentsByArticle:", error);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};

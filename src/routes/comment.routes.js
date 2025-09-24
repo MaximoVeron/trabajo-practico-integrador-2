@@ -6,6 +6,7 @@ import {
   updateComment,
   deleteComment,
   getCommentsByUser,
+  getCommentsByArticle,
 } from "../controllers/comment.controller.js";
 import { applyValidations } from "../middlewares/catch.validations.js";
 import {
@@ -26,6 +27,12 @@ commentRouter.post(
   createComment
 );
 commentRouter.get("/comments", getComments);
+commentRouter.get("/comments/my", authMiddleware, getCommentsByUser);
+commentRouter.get(
+  "/comments/article/:articleId",
+  authMiddleware,
+  getCommentsByArticle
+);
 commentRouter.get(
   "/comments/:id",
   authMiddleware,
@@ -33,7 +40,6 @@ commentRouter.get(
   applyValidations,
   getCommentById
 );
-commentRouter.get("/comments/my", authMiddleware, getCommentsByUser);
 commentRouter.put(
   "/comments/:id",
   authMiddleware,

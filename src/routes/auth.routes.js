@@ -3,6 +3,7 @@ import {
   loginUser,
   logout,
   registerUser,
+  getProfile,
 } from "../controllers/auth.controller.js";
 import { validateUserCreation } from "../middlewares/validations/user.validation.js";
 import { applyValidations } from "../middlewares/catch.validations.js";
@@ -18,5 +19,6 @@ authRouter.post(
 );
 authRouter.post("/auth/login", loginUser);
 authRouter.post("/auth/logout", authMiddleware, logout);
+authRouter.get("/auth/profile", authMiddleware, getProfile);
 
 export default authRouter;
