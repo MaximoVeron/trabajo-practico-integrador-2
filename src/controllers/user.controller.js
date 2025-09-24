@@ -7,7 +7,6 @@ export const createUser = async (req, res) => {
     await newUser.save();
     return res.status(201).json(newUser);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -17,7 +16,6 @@ export const getUser = async (req, res) => {
     const users = await UserModel.find({ is_active: true }).lean();
     return res.status(200).json(users);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -29,7 +27,6 @@ export const getUserById = async (req, res) => {
     }).lean();
     return res.status(200).json(user);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -43,7 +40,6 @@ export const updateUser = async (req, res) => {
     );
     return res.status(200).json(updateUser);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -55,7 +51,6 @@ export const deleteUser = async (req, res) => {
     });
     return res.status(204).json({ msg: "Usuario eliminado" });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -77,7 +72,6 @@ export const getUserWithArticles = async (req, res) => {
 
     return res.status(200).json(user);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };

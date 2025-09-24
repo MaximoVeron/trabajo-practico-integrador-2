@@ -24,7 +24,6 @@ export const getArticles = async (req, res) => {
       .populate("tags", "name");
     return res.status(200).json(articles);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ msg: "Error interno del servidor" });
   }
 };
@@ -34,7 +33,6 @@ export const getArticleById = async (req, res) => {
     const article = await ArticleModel.findById(req.params.id);
     return res.status(200).json(article);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ msg: "Error interno del servidor" });
   }
 };
@@ -48,7 +46,6 @@ export const updateArticle = async (req, res) => {
     );
     return res.status(200).json(updateArticle);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ msg: "Error interno del servidor" });
   }
 };
@@ -62,7 +59,6 @@ export const deleteArticle = async (req, res) => {
     await ArticleModel.findByIdAndDelete(articleId);
     return res.status(204).json({ msg: "Artículo eliminado" });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ msg: "Error interno del servidor" });
   }
 };
@@ -72,7 +68,6 @@ export const getArticlesByUser = async (req, res) => {
     const articles = await ArticleModel.find({ author: req.user.id });
     return res.status(200).json(articles);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ msg: "Error interno del servidor" });
   }
 };
@@ -92,7 +87,6 @@ export const getMyArticles = async (req, res) => {
       articles: articles,
     });
   } catch (error) {
-    console.error("Error en getMyArticles:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };

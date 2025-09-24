@@ -13,7 +13,6 @@ export const registerUser = async (req, res) => {
     await newUser.save();
     return res.status(201).json(newUser);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -58,7 +57,6 @@ export const getProfile = async (req, res) => {
     const user = await UserModel.findById(userId);
     return res.status(200).json(user.profile);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -74,7 +72,6 @@ export const updateProfile = async (req, res) => {
     );
     return res.status(200).json(updatedUser.profile);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };

@@ -9,7 +9,6 @@ export const createComment = async (req, res) => {
     await newComment.save();
     return res.status(201).json(newComment);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -19,7 +18,6 @@ export const getComments = async (req, res) => {
     const comments = await CommentModel.find();
     return res.status(200).json(comments);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -29,7 +27,6 @@ export const getCommentById = async (req, res) => {
     const comment = await CommentModel.findById(req.params.id);
     return res.status(200).json(comment);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -43,7 +40,6 @@ export const updateComment = async (req, res) => {
     );
     return res.status(200).json(updateComment);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -53,7 +49,6 @@ export const deleteComment = async (req, res) => {
     await CommentModel.findByIdAndDelete(req.params.id);
     return res.status(204).json({ msg: "Comentario eliminado" });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -63,7 +58,6 @@ export const getCommentsByUser = async (req, res) => {
     const comments = await CommentModel.find({ author: req.user.id });
     return res.status(200).json(comments);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -82,7 +76,6 @@ export const getCommentsByArticle = async (req, res) => {
       comments: comments,
     });
   } catch (error) {
-    console.error("Error en getCommentsByArticle:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
