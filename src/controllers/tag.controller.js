@@ -7,8 +7,10 @@ export const createTag = async (req, res) => {
     await newTag.save();
     return res.status(201).json(newTag);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Error interno del servidor" });
+    return res.status(500).json({
+      msg: "Error interno del servidor",
+      error: error.message,
+    });
   }
 };
 

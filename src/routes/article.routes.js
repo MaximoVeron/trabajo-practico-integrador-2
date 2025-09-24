@@ -5,6 +5,7 @@ import {
   getArticleById,
   updateArticle,
   deleteArticle,
+  getMyArticles,
 } from "../controllers/article.controller.js";
 import { applyValidations } from "../middlewares/catch.validations.js";
 import {
@@ -19,11 +20,15 @@ const articleRouter = Router();
 
 articleRouter.post(
   "/articles",
+  authMiddleware,
   validateCreateArticle,
   applyValidations,
   createArticle
 );
 articleRouter.get("/articles", getArticles);
+
+articleRouter.get("/articles/my", authMiddleware, getMyArticles);
+
 articleRouter.get(
   "/articles/:id",
   validateArticleId,

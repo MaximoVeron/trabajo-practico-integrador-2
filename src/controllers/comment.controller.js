@@ -57,3 +57,13 @@ export const deleteComment = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+export const getCommentsByUser = async (req, res) => {
+  try {
+    const comments = await CommentModel.find({ author: req.user.id });
+    return res.status(200).json(comments);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};

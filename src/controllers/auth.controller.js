@@ -1,4 +1,4 @@
-import { hashPassword } from "../helpers/bcript.js";
+import { comparePassword, hashPassword } from "../helpers/bcript.js";
 import { generateToken } from "../helpers/jwt.js";
 import UserModel from "../models/user.model.js";
 
@@ -25,7 +25,7 @@ export const loginUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "Credenciales invalidas" });
     }
-    const passwordExist = await user.comparePassword(password, user.password);
+    const passwordExist = await comparePassword(password, user.password);
     if (!passwordExist) {
       return res.status(404).json({ message: "Credenciales invalidas" });
     }
@@ -39,8 +39,9 @@ export const loginUser = async (req, res) => {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
+
+    return res.json({ message: "Login exitoso" });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
