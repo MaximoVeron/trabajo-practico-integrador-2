@@ -4,7 +4,6 @@ export const authMiddleware = (req, res, next) => {
   try {
     // Obtener token de la cookie
     const token = req.cookies["token"];
-    console.log("Token extraído:", token ? "Token presente" : "Token ausente");
     if (!token) {
       return res.status(401).json({ message: "No autenticado" });
     }

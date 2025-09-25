@@ -17,28 +17,21 @@ import { authMiddleware } from "../middlewares/auth.middlewares.js";
 import { isOwnerOrAdmin } from "../middlewares/ownerOrAdminMiddleware.js";
 
 const articleRouter = Router();
-
+articleRouter.use(authMiddleware); // Aplica el middleware de autenticación a todas las rutas
 articleRouter.post(
   "/articles",
-  authMiddleware,
   validateCreateArticle,
   applyValidations,
   createArticle
 );
-articleRouter.get("/articles", getArticles);
+articleRouter.get("/articles", authMiddleware, applyValidations, getArticles);
 
-articleRouter.get("/articles/my", authMiddleware, getMyArticles);
+articleRouter.get("/articles/my", applyValidations, getMyArticles);
 
-articleRouter.get(
-  "/articles/:id",
-  validateArticleId,
-  applyValidations,
-  getArticleById
-);
+articleRouter.get("/articles/:id", validateArticleId, getArticleById);
 articleRouter.put(
   "/articles/:id",
   validateArticleId,
-  authMiddleware,
   isOwnerOrAdmin,
   validateUpdateArticle,
   applyValidations,

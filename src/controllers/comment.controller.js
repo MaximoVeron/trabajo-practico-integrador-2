@@ -55,7 +55,19 @@ export const deleteComment = async (req, res) => {
 
 export const getCommentsByUser = async (req, res) => {
   try {
-    const comments = await CommentModel.find({ author: req.user.id });
+    const comments = await CommentModel.find({ author: req.user.id })
+      .populate({
+        path: "author",
+        select: "username email createdAt",
+      })
+      .populate({
+        path: "article",
+        select: "title",
+        populate: {
+          path: "tags",
+          select: "name",
+        },
+      });
     return res.status(200).json(comments);
   } catch (error) {
     return res.status(500).json({ message: "Error interno del servidor" });
@@ -76,6 +88,7 @@ export const getCommentsByArticle = async (req, res) => {
       comments: comments,
     });
   } catch (error) {
+    console.error("Error en getCommentsByArticle:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };

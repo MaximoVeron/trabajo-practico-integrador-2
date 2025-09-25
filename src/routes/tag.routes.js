@@ -16,27 +16,19 @@ import { authMiddleware } from "../middlewares/auth.middlewares.js";
 import { isAdmin } from "../middlewares/admin.middleware.js";
 
 const tagRouter = Router();
-
+tagRouter.use(authMiddleware);
 tagRouter.post(
   "/tags",
-  authMiddleware,
   isAdmin,
   validateTagCreation,
   applyValidations,
   createTag
 );
 tagRouter.get("/tags", authMiddleware, getTags);
-tagRouter.get(
-  "/tags/:id",
-  validateTagId,
-  authMiddleware,
-  applyValidations,
-  getTagById
-);
+tagRouter.get("/tags/:id", validateTagId, applyValidations, getTagById);
 tagRouter.put(
   "/tags/:id",
   validateTagUpdate,
-  authMiddleware,
   isAdmin,
   applyValidations,
   updateTag
@@ -44,7 +36,6 @@ tagRouter.put(
 tagRouter.delete(
   "/tags/:id",
   validateTagId,
-  authMiddleware,
   isAdmin,
   applyValidations,
   deleteTag

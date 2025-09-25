@@ -18,16 +18,15 @@ import { authMiddleware } from "../middlewares/auth.middlewares.js";
 import { isOwnerOrAdmin } from "../middlewares/ownerOrAdminMiddleware.js";
 
 const commentRouter = Router();
-
+commentRouter.use(authMiddleware);
 commentRouter.post(
   "/comments",
-  authMiddleware,
   validateCreateComment,
   applyValidations,
   createComment
 );
 commentRouter.get("/comments", getComments);
-commentRouter.get("/comments/my", authMiddleware, getCommentsByUser);
+commentRouter.get("/comments/my", getCommentsByUser);
 commentRouter.get(
   "/comments/article/:articleId",
   authMiddleware,
@@ -35,14 +34,12 @@ commentRouter.get(
 );
 commentRouter.get(
   "/comments/:id",
-  authMiddleware,
   validateCommentId,
   applyValidations,
   getCommentById
 );
 commentRouter.put(
   "/comments/:id",
-  authMiddleware,
   isOwnerOrAdmin,
   validateUpdateComment,
   applyValidations,

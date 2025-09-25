@@ -22,7 +22,8 @@ export const getUser = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.params.id, {
+    const user = await UserModel.findOne({
+      _id: req.params.id,
       is_active: true,
     }).lean();
     return res.status(200).json(user);

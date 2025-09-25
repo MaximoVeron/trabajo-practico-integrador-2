@@ -26,7 +26,7 @@ export const getTags = async (req, res) => {
 
 export const getTagById = async (req, res) => {
   try {
-    const tag = await TagModel.findById(req.params.id);
+    const tag = await TagModel.findById(req.params.id).populate("articles");
     return res.status(200).json(tag);
   } catch (error) {
     console.error(error);
