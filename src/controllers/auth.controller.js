@@ -63,15 +63,18 @@ export const getProfile = async (req, res) => {
 
 // PUT /api/auth/profile: Actualizar perfil embebido del usuario autenticado. (usuario autenticado)
 export const updateProfile = async (req, res) => {
+  const userId = req.user.id;
   try {
-    const userId = req.user.id;
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
-      { profile: req.validatedData },
+      {
+        ...req.validatedData,
+      },
       { new: true }
     );
     return res.status(200).json(updatedUser.profile);
   } catch (error) {
+    console.error("Error al actualizar perfil:", error); // Para debugging
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };

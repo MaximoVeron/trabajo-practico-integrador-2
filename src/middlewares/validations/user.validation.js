@@ -66,6 +66,11 @@ export const validateUserCreation = [
     .withMessage("La biografía debe ser una cadena de texto")
     .isLength({ max: 500 })
     .withMessage("La biografía no puede exceder los 500 caracteres"),
+  body("profile.avatar_url")
+    .optional()
+    .isURL()
+    .withMessage("La URL del avatar debe ser válida")
+    .trim(),
 ];
 
 export const validateUserUpdate = [
@@ -77,16 +82,7 @@ export const validateUserUpdate = [
     .withMessage("El nombre de usuario debe tener entre 3 y 30 caracteres")
     .trim()
     .escape(),
-  body("email")
-    .optional()
-    .isEmail()
-    .withMessage("El email debe ser válido")
-    .isString()
-    .withMessage("El email debe ser una cadena de texto")
-    .custom(validateEmailUnique)
-    .normalizeEmail()
-    .escape()
-    .trim(),
+  body("email").not().exists().withMessage("El email no se puede modificar"),
   body("password")
     .optional()
     .isString()
@@ -140,6 +136,51 @@ export const validateUserUpdate = [
     .optional()
     .isBoolean()
     .withMessage("is_active debe ser un valor booleano"),
+  body("profile.avatar_url")
+    .optional()
+    .isURL()
+    .withMessage("La URL del avatar debe ser válida")
+    .trim(),
+];
+
+export const validateProfileUpdate = [
+  body("profile.first_name")
+    .optional()
+    .isString()
+    .withMessage("El nombre debe ser una cadena de texto")
+    .isAlpha()
+    .withMessage("El nombre solo puede contener letras")
+    .isLength({ min: 2, max: 50 })
+    .withMessage("El nombre debe tener entre 2 y 50 caracteres")
+    .trim()
+    .escape(),
+  body("profile.last_name")
+    .optional()
+    .isString()
+    .withMessage("El apellido debe ser una cadena de texto")
+    .isLength({ min: 2, max: 50 })
+    .withMessage("El apellido debe tener entre 2 y 50 caracteres")
+    .isAlpha()
+    .withMessage("El apellido solo puede contener letras")
+    .trim()
+    .escape(),
+  body("profile.biography")
+    .optional()
+    .isString()
+    .withMessage("La biografía debe ser una cadena de texto")
+    .isLength({ max: 500 })
+    .withMessage("La biografía no puede exceder los 500 caracteres")
+    .trim()
+    .escape(),
+  body("profile.avatar_url")
+    .optional()
+    .isURL()
+    .withMessage("La URL del avatar debe ser válida")
+    .trim(),
+  body("profile.birth_date")
+    .optional()
+    .isISO8601()
+    .withMessage("La fecha de nacimiento debe ser válida"),
 ];
 
 export const validateUserId = [
