@@ -16,7 +16,6 @@ export const applyValidations = (req, res, next) => {
   } else {
     console.log("Errores encontrados: Ninguno");
   }
-
   req.validatedData = matchedData(req);
   next();
 };

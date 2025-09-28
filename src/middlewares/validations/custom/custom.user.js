@@ -5,6 +5,7 @@ export const validateUserExists = async (id) => {
   if (!user) {
     throw new Error(`El usuario con id ${id} no existe`);
   }
+  return true;
 };
 
 export const validateEmailUnique = async (email) => {
@@ -14,4 +15,5 @@ export const validateEmailUnique = async (email) => {
   if (userEmail) {
     throw new Error(`El email ${email} ya está en uso`);
   }
+  return true;
 };

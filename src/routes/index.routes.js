@@ -6,9 +6,9 @@ import commentRouter from "./comment.routes.js";
 import authRouter from "./auth.routes.js";
 
 const router = Router();
+router.use(authRouter);
 router.use(userRouter);
 router.use(articleRouter);
 router.use(tagRouter);
-router.use(authRouter);
 router.use(commentRouter);
 export default router;
